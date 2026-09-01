@@ -8,12 +8,21 @@
 - 按业务触发、核心状态变化和可观察结果划分业务流。
 - 为每条业务流识别最低变更检查点；起点可以是 Data、Adapter、Port、Domain、Use Case 或 Entry。
 - 将 Data、Adapter、Port、Domain、Use Case、Entry 作为证据类型，不当作必须逐层输出的架构清单。
-- 从实际起点提炼“底层事实 → 关键语义 → 用例行为 → 顶层业务结果”的短链，只展开会改变结论的语义跃迁。
+- 先概括业务变化，再以纵向证据卡片和带语义的连接线展示“底层事实 → 关键语义 → 用例行为 → 顶层业务结果”的最短可靠链条。
 - 区分具体代码事实、业务语义与整条链的最终影响，便于按证据节点回到代码核查。
+- 在支持本地文件跳转的客户端中，将证据符号输出为可点击的源码行链接。
+- 将风险反向关联到它破坏的业务流、业务语义或任务目标。
 - 使用代码位置支撑结论，区分事实、推断和无法确认的行为。
 - 对照明确的任务目标给出“达成、部分达成、未达成或无法确认”的结论。
 
-适用于聚焦 Git 差异的业务代码审阅，不适用于从零实现功能或通用架构讲解。
+## 适用范围
+
+该 Skill 主要面向具有明确业务语义的应用代码，尤其适合审阅后端服务中的 API、持久化、事务、领域规则、消息处理和任务流程，但不限定语言、框架或架构风格。
+
+- 不要求采用 DDD、Clean Architecture 或六边形架构。Data、Adapter、Port、Domain、Use Case、Entry 只是按职责识别证据的标签；项目没有独立 Domain 或 Port 时直接省略。
+- Java/Spring 是典型使用场景，Go、C#、TypeScript/Node.js、Python、Rust 等项目只要能够从 Git 变更中识别“触发 → 状态变化 → 可观察结果”，同样适用。
+- 前端状态流、CLI、定时任务或数据处理代码如果承载明确业务规则，也可以使用；证据类型按实际职责判断，不按目录名或技术栈套用。
+- 不适用于纯格式调整、仅视觉样式修改、无业务语义的机械重构、从零实现功能或脱离具体 Git 变更的通用架构讲解。
 
 ## 安装
 
@@ -24,6 +33,12 @@
 ```powershell
 git clone https://github.com/co-nexo/bottom-up-review.git `
   "$HOME\.agents\skills\bottom-up-review"
+```
+
+### Windows CMD
+
+```bat
+git clone https://github.com/co-nexo/bottom-up-review.git "%USERPROFILE%\.agents\skills\bottom-up-review"
 ```
 
 ### macOS / Linux
@@ -51,6 +66,12 @@ Windows PowerShell：
 
 ```powershell
 git -C "$HOME\.agents\skills\bottom-up-review" pull --ff-only
+```
+
+Windows CMD：
+
+```bat
+git -C "%USERPROFILE%\.agents\skills\bottom-up-review" pull --ff-only
 ```
 
 macOS / Linux：
@@ -88,6 +109,8 @@ $bottom-up-review 只审阅以下文件的当前变更：
 
 任务目标：保证额度扣减具有幂等性。
 ```
+
+以上 Java 路径仅用于示例，不代表语言限制；替换为当前项目中的实际文件即可。
 
 该 Skill 默认允许隐式调用，因此自然语言请求与其描述匹配时，Codex 也可能自动选择它。正式审阅时推荐显式使用 `$bottom-up-review`，以确保调用行为清晰可见。
 
