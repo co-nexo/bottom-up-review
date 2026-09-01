@@ -1,6 +1,6 @@
 ---
 name: bottom-up-review
-description: "沿变更代码的调用链自底向上追踪业务流程，并根据任务目标审阅 Git 差异。适用于聚焦具体变更的代码审阅；不适用于从零实现功能或通用架构讲解。"
+description: "Review Git diffs bottom-up from changed code through the business flow and verify the stated task goal. 用于聚焦具体变更的业务审阅；不适用于从零实现功能或通用架构讲解。"
 ---
 
 # 自底向上审阅
