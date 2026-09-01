@@ -1,0 +1,4 @@
+interface:
+  display_name: "自底向上审阅"
+  short_description: "从 Git 差异自底向上定位业务变化并核对任务目标"
+  default_prompt: "使用 $bottom-up-review 审阅当前 Git 差异，从具体代码变更向上追踪到业务目标。"
